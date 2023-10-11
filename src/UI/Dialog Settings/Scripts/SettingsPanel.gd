@@ -64,7 +64,7 @@ signal unsaved_change
 @onready var DialogEditor : GraphEdit = get_node(dialog_editor_path)
 @onready var MailData := get_node(mail_data_path)
 
-var current_dialog : dialog_node
+var current_dialog : DialogNode
 var dialog_availability_mode := false
 var exiting_availability_mode := false
 var availability_slot : int
@@ -100,7 +100,7 @@ func set_quest_dict():
 	for node in access_to_quests:
 		node.quest_dict = quest_indexer.new().index_quest_categories()
 
-func disconnect_current_dialog(dialog : dialog_node,_bool : bool,_ignore : bool):
+func disconnect_current_dialog(dialog : DialogNode,_bool : bool,_ignore : bool):
 	if current_dialog == dialog:
 		dialog.disconnect("text_changed", Callable(self, "update_text"))
 		dialog.disconnect("request_deletion", Callable(self, "disconnect_current_dialog"))
@@ -189,7 +189,7 @@ func set_title_text(title_text : String,node_index : int):
 	TitleLabel.text = title_text+"| Node "+str(node_index)
 
 		
-func load_dialog_settings(dialog : dialog_node):
+func load_dialog_settings(dialog : DialogNode):
 	DialogSettingsTab.visible = true
 	if current_dialog != dialog:
 		if current_dialog != null && is_instance_valid(current_dialog) && current_dialog.is_connected("text_changed", Callable(self, "update_text")):

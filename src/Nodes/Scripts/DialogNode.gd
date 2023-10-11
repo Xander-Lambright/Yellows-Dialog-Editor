@@ -1,4 +1,4 @@
-class_name dialog_node
+class_name DialogNode
 extends GraphNode
 enum CONNECTION_TYPES{PORT_INTO_DIALOG,PORT_INTO_RESPONSE,PORT_FROM_DIALOG,PORT_FROM_RESPONSE} 
 
@@ -30,12 +30,12 @@ var node_type :String = "Dialog Node"
 var node_index :int = -1: set = set_node_index
 
 
-var response_options : Array[response_node]= []
-var connected_responses : Array[response_node]= []
+var response_options : Array[ResponseNode]= []
+var connected_responses : Array[ResponseNode]= []
 
 
 
-var original_parent : response_node
+var original_parent : ResponseNode
 var total_height : int
 
 var initial_offset_x :float= 0
@@ -101,7 +101,7 @@ func add_response_node(commit_to_undo := true):
 		emit_signal("add_response_request",self,GlobalDeclarations.RESPONSE_NODE.instantiate(),commit_to_undo)
 		emit_signal("unsaved_changes")
 	
-func delete_response_node(deletion_slot : int,response_node : response_node):
+func delete_response_node(deletion_slot : int,response_node : ResponseNode):
 	for i in response_options:
 		if i.slot > deletion_slot:
 			i.slot -=1
@@ -117,10 +117,10 @@ func clear_responses():
 	response_options.clear()
 	emit_signal("unsaved_changes")
 
-func add_connected_response(response : response_node):
+func add_connected_response(response : ResponseNode):
 	connected_responses.append(response)
 	
-func remove_connected_response(response : response_node):
+func remove_connected_response(response : ResponseNode):
 	connected_responses.erase(response)
 
 func delete_self(perm := true,commit_to_undo := true):

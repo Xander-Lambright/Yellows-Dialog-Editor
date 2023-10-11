@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://tumdi0sl1d4s"]
 
-[ext_resource type="Script" path="res://src/UI/Editor/keybind.gd" id="1_ab5md"]
+[ext_resource type="Script" path="res://src/UI/Editor/scripts/keybind.gd" id="1_wnwcv"]
 
 [node name="Keybind" type="HBoxContainer"]
 custom_minimum_size = Vector2(325, 31)
-script = ExtResource("1_ab5md")
+script = ExtResource("1_wnwcv")
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(166.135, 0)

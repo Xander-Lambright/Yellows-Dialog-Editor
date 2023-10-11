@@ -92,7 +92,7 @@ func delete_all_selected_nodes():
 
 
 
-func add_dialog_node(new_dialog : dialog_node = GlobalDeclarations.DIALOG_NODE.instantiate(), use_exact_offset : bool = false,commit_to_undo := true) -> dialog_node:
+func add_dialog_node(new_dialog : DialogNode = GlobalDeclarations.DIALOG_NODE.instantiate(), use_exact_offset : bool = false,commit_to_undo := true) -> DialogNode:
 	#Adds a new dialog node into the editor.
 	if new_dialog.node_index == -1:
 		new_dialog.node_index = node_index
@@ -126,7 +126,7 @@ func add_dialog_node(new_dialog : dialog_node = GlobalDeclarations.DIALOG_NODE.i
 func relay_unsaved_changes():
 	emit_signal("unsaved_changes",CurrentEnvironment.current_category_name)
 
-func delete_dialog_node(dialog : dialog_node,remove_from_global_index := false,commit_to_undo := true):
+func delete_dialog_node(dialog : DialogNode,remove_from_global_index := false,commit_to_undo := true):
 	if commit_to_undo && selected_dialogs.size() < 2:
 		dialog_node_deleted.emit(dialog.save())
 	if selected_dialogs.find(dialog,0) != -1:
@@ -144,7 +144,7 @@ func delete_dialog_node(dialog : dialog_node,remove_from_global_index := false,c
 
 	
 
-func add_response_node(parent_dialog : dialog_node, new_response : response_node= GlobalDeclarations.RESPONSE_NODE.instantiate(),commit_to_undo := true) -> response_node:
+func add_response_node(parent_dialog : DialogNode, new_response : ResponseNode = GlobalDeclarations.RESPONSE_NODE.instantiate(),commit_to_undo := true) -> ResponseNode:
 	
 	var new_offset
 	if new_response.node_index == -1:
@@ -180,7 +180,7 @@ func add_response_node(parent_dialog : dialog_node, new_response : response_node
 		emit_signal("response_node_added",new_response)
 	return new_response
 
-func delete_response_node(dialog : dialog_node,response : response_node, commit_to_undo := true):
+func delete_response_node(dialog : DialogNode,response : ResponseNode, commit_to_undo := true):
 
 	if commit_to_undo:
 		emit_signal("response_node_deleted",response.save())
@@ -200,7 +200,7 @@ func delete_response_node(dialog : dialog_node,response : response_node, commit_
 
 var color_organizers = [] #Used to fix a bug where color organizers are made last, so dont allow mouse through them
 
-func add_color_organizer(col_org :color_organizer= GlobalDeclarations.COLOR_ORGANIZER.instantiate(), use_exact_offset : bool = false,commit_to_undo := true):
+func add_color_organizer(col_org :ColorOrganizer= GlobalDeclarations.COLOR_ORGANIZER.instantiate(), use_exact_offset : bool = false,commit_to_undo := true):
 	if col_org.node_index == -1:
 		col_org.node_index = color_organizer_node_index
 	color_organizer_node_index += 1
@@ -216,7 +216,7 @@ func add_color_organizer(col_org :color_organizer= GlobalDeclarations.COLOR_ORGA
 	if commit_to_undo:
 		color_organizer_added.emit(col_org)
 	
-func delete_color_organizer(col_org : color_organizer,commit_to_undo := true):
+func delete_color_organizer(col_org : ColorOrganizer,commit_to_undo := true):
 	current_color_organizer_index_map.erase(col_org.node_index)
 	if commit_to_undo:
 		color_organizer_deleted.emit(col_org.save())
@@ -261,8 +261,8 @@ func _on_begin_node_move():
 
 func connect_nodes(from : GraphNode, from_slot : int, to: GraphNode, to_slot : int,commit_to_undo := true):
 	
-	var response : response_node
-	var dialog : dialog_node
+	var response : ResponseNode
+	var dialog : DialogNode
 	if from.node_type == "Player Response Node":
 		response = from
 		dialog = to
@@ -282,8 +282,8 @@ func connect_nodes(from : GraphNode, from_slot : int, to: GraphNode, to_slot : i
 	
 func disconnect_nodes(from: GraphNode, from_slot : int, to: GraphNode, to_slot : int, commit_to_undo := true):
 	
-	var response : response_node
-	var dialog : dialog_node
+	var response : ResponseNode
+	var dialog : DialogNode
 	
 	if from.node_type == "Player Response Node":
 		response = from
@@ -309,7 +309,7 @@ func show_connection_line(from: GraphNode,to: GraphNode):
 	connect_node(from.name,0,to.name,0)
 
 
-func handle_swapping_responses(response_node : response_node ,overlapping_response : response_node,from : Vector2 ,to: Vector2,commit_to_undo := true):
+func handle_swapping_responses(response_node : ResponseNode ,overlapping_response : ResponseNode,from : Vector2 ,to: Vector2,commit_to_undo := true):
 		var initial_slot := response_node.slot
 		var initial_parent := response_node.parent_dialog
 		var initial_offset := from
@@ -525,7 +525,7 @@ func add_responses_and_dialogs_to_selected_nodes():
 
 func handle_input(event : InputEvent):
 	if event.is_action_pressed("add_dialog_at_mouse"):
-		var new_dialog_node : dialog_node = GlobalDeclarations.DIALOG_NODE.instantiate()
+		var new_dialog_node : DialogNode = GlobalDeclarations.DIALOG_NODE.instantiate()
 		new_dialog_node.position_offset = get_local_mouse_position()
 		add_dialog_node(new_dialog_node)
 	if event.is_action_pressed("create_response"):
@@ -536,25 +536,25 @@ func handle_input(event : InputEvent):
 	if event.is_action_pressed("focus_below"):
 		match get_viewport().gui_get_focus_owner().get_name(): 
 			"ResponseText":
-				var response : response_node = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
+				var response : ResponseNode = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
 				if response.slot != response.parent_dialog.response_options.size()-1:
 					response.parent_dialog.response_options[response.slot+1].set_focus_on_title()
 			"TitleText":
-				var dialog : dialog_node= get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
+				var dialog : DialogNode= get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
 				dialog.set_focus_on_text()	
 	if Input.is_action_just_pressed("focus_above"):
 		match get_viewport().gui_get_focus_owner().get_name(): 
 			"ResponseText":
-				var response : response_node = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
+				var response : ResponseNode = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
 				if response.slot != 0:
 					response.parent_dialog.response_options[response.slot-1].set_focus_on_title()
 			"DialogText":
-				var dialog : dialog_node = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
+				var dialog : DialogNode = get_viewport().gui_get_focus_owner().get_parent().get_parent().get_parent()
 				dialog.set_focus_on_title()
 	if Input.is_action_just_pressed("focus_left"):
 		
 		if selected_responses.size() == 1 && selected_dialogs.size() == 0:
-			var response : response_node = selected_responses[0]
+			var response : ResponseNode = selected_responses[0]
 			if Input.is_action_pressed("focus_cycle"):
 				
 				var response_index : int = response.connected_dialog.connected_responses.find(response)
@@ -568,13 +568,13 @@ func handle_input(event : InputEvent):
 			else:
 				response.parent_dialog.set_focus_on_text()
 		elif selected_responses.size() == 0 && selected_dialogs.size() == 1:
-			var dialog : dialog_node= selected_dialogs[0]
+			var dialog : DialogNode= selected_dialogs[0]
 			if dialog.connected_responses.size() != 0:
 				dialog.connected_responses[0].set_focus_on_title()
 	if Input.is_action_just_pressed("focus_right"):
 	
 		if selected_responses.size() == 1 && selected_dialogs.size() == 0:
-			var response : response_node = selected_responses[0]
+			var response : ResponseNode = selected_responses[0]
 			if response.connected_dialog == null:
 				return
 			if Input.is_action_pressed("focus_cycle"):
@@ -588,7 +588,7 @@ func handle_input(event : InputEvent):
 			else:
 				response.connected_dialog.set_focus_on_text()
 		elif selected_responses.size() == 0 && selected_dialogs.size() == 1:
-			var dialog : dialog_node = selected_dialogs[0]
+			var dialog : DialogNode = selected_dialogs[0]
 			if dialog.response_options.size() != 0:
 				dialog.response_options[0].set_focus_on_title()
 

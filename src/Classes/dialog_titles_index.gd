@@ -17,7 +17,7 @@ func get_title_from_id(id : int) -> String:
 		return all_loaded_dialogs.get(id)
 	return "Unindexed Dialog"
 
-func add_dialog_to_loaded(dialog : dialog_node):
+func add_dialog_to_loaded(dialog : DialogNode):
 	if all_loaded_dialogs.has(dialog.dialog_id):
 		return
 	all_loaded_dialogs[dialog.dialog_id] = dialog.dialog_title
@@ -27,7 +27,7 @@ func add_dialog_to_loaded(dialog : dialog_node):
 	
 	
 			
-func update_changed_dialog_title(dialog : dialog_node) -> void:
+func update_changed_dialog_title(dialog : DialogNode) -> void:
 	all_loaded_dialogs[dialog.dialog_id] = dialog.dialog_title
 	emit_signal("dialog_title_changed")
 			
@@ -37,7 +37,7 @@ func dialog_deleted(dialog_id : int) -> void:
 	all_loaded_dialogs.erase(dialog_id)
 
 
-func dialog_node_added(dialog : dialog_node) -> void:
+func dialog_node_added(dialog : DialogNode) -> void:
 	add_dialog_to_loaded(dialog)
 
 

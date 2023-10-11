@@ -18,3 +18,20 @@ res://src/UI/Editor/DialogEditor.gd
 res://src/Nodes/Scripts/color_organizer.gd
 res://src/Nodes/Scripts/DialogNode.gd
 res://src/Classes/File System/CategoryImporter.gd
+res://src/Classes/UndoRedo.gd
+res://src/Classes/File System/CategoryExporter.gd
+res://src/UI/CategoryPanel/Scripts/CategoryButton.gd
+res://src/UI/CategoryPanel/Scripts/CategoryPanel.gd
+res://src/Classes/File System/category_loader.gd
+res://src/Classes/File System/category_saver.gd
+res://src/UI/Util/Scripts/ChooseInitialDialogPopup.gd
+res://src/Autoload/current_environment.gd
+res://src/UI/Dialog Settings/Scripts/Dialog Availability.gd
+res://src/Classes/Availability Objects/dialog_availability_object.gd
+res://src/Classes/dialog_titles_index.gd
+res://src/UI/Util/Scripts/DirectorySearcher.gd
+res://src/UI/NavigationPanel/Scripts/EditorNavigation.gd
+res://src/Classes/File System/EnvironmentIndexer.gd
+res://src/UI/Util/Scripts/Expandable Line Edit.gd
+res://export_presets.cfg
+res://src/Nodes/ColorOrganizer.tscn

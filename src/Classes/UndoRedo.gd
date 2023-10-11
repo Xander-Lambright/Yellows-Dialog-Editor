@@ -498,7 +498,7 @@ func execute_action_swap_response(action):
 #Color Organizers
 func execute_action_add_color_organizer(action: Dictionary):
 	var node_data = action.color_org_data
-	var recreated_color_organizer : color_organizer = GlobalDeclarations.COLOR_ORGANIZER.instantiate()
+	var recreated_color_organizer : ColorOrganizer = GlobalDeclarations.COLOR_ORGANIZER.instantiate()
 	recreated_color_organizer.initial_offset = Vector2(node_data["position_offset.x"],node_data["position_offset.y"])
 	recreated_color_organizer.box_color  = GlobalDeclarations.int_to_color(node_data["color"])
 	recreated_color_organizer.custom_minimum_size = Vector2(node_data["min_size_x"],node_data["min_size_y"])
@@ -549,7 +549,7 @@ func execute_action_disconnect_nodes(dialog_index,response_index):
 
 #Isolated Useful Methods		
 func create_response_node_from_data(response_data):
-	var currently_loaded_response : response_node = GlobalDeclarations.RESPONSE_NODE.instantiate()
+	var currently_loaded_response ResponseNode = GlobalDeclarations.RESPONSE_NODE.instantiate()
 	currently_loaded_response.slot = response_data["slot"]
 	currently_loaded_response.color_decimal = response_data["color_decimal"]
 	currently_loaded_response.to_dialog_id = response_data["to_dialog_id"]

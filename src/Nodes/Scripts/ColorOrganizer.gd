@@ -1,5 +1,5 @@
 extends GraphNode
-class_name color_organizer
+class_name ColorOrganizer
 var node_type = "Color Organizer"
 var text = "Color Organizer"
 var box_color : Color = Color(1,1,1,1)

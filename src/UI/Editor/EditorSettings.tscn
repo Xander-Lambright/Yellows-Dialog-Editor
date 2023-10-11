@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8upc5vs5ynlw"]
 
-[ext_resource type="Script" path="res://src/UI/Editor/EditorSettings.gd" id="1_b3w4b"]
+[ext_resource type="Script" path="res://src/UI/Editor/scripts/EditorSettings.gd" id="1_76bod"]
 [ext_resource type="Texture2D" uid="uid://fs6yo18nrkpb" path="res://Assets/UI Textures/Icon Font/reload-line.png" id="2_ik3cf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arin6"]
@@ -32,7 +32,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_arin6")
-script = ExtResource("1_b3w4b")
+script = ExtResource("1_76bod")
 hide_connection_slider_path = NodePath("ScrollContainer/VBoxContainer2/GridSettings/HideConnectionDistance/HSlider")
 hold_shift_check_path = NodePath("ScrollContainer/VBoxContainer2/GridSettings/HoldShift/CheckButton")
 auto_save_path = NodePath("ScrollContainer/VBoxContainer2/FileSettings/Autosave Time/HSlider")

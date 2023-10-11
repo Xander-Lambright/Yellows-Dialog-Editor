@@ -19,8 +19,8 @@ var imported_dialogs : Array[Dictionary] = []
 
 
 
-var loaded_dialog_nodes :Array[dialog_node]= []
-var loaded_responses :Array[response_node]= []
+var loaded_dialog_nodes :Array[DialogNode]= []
+var loaded_responses :Array[ResponseNode]= []
 var unimported_dialog_position : Vector2 = Vector2(300,300)
 
 func initial_dialog_chosen(category_name : String,dialog_jsons : Array[Dictionary],index : int):
@@ -49,8 +49,8 @@ func create_nodes_from_index(category_name : String, index : int = 0):
 		loaded_dialog_nodes = []
 		loaded_responses = []
 	
-func create_dialog_from_json(current_json :Dictionary ,offset : Vector2) -> dialog_node:
-	var new_node : dialog_node = GlobalDeclarations.DIALOG_NODE.instantiate()
+func create_dialog_from_json(current_json :Dictionary ,offset : Vector2) -> DialogNode:
+	var new_node : DialogNode = GlobalDeclarations.DIALOG_NODE.instantiate()
 	new_node.position_offset = offset
 	#emit_signal("editor_offset_loaded",new_node.offset)
 	new_node = update_dialog_node_information(new_node,current_json)
@@ -61,10 +61,10 @@ func create_dialog_from_json(current_json :Dictionary ,offset : Vector2) -> dial
 	create_dialogs_from_responses(new_node)
 	return new_node				
 
-func create_response_nodes_from_json(node : dialog_node,json : Dictionary) -> int:
+func create_response_nodes_from_json(node : DialogNode,json : Dictionary) -> int:
 	var total_num_of_responses = 0
 	for i in json["Options"]:
-		var response : response_node = GlobalDeclarations.RESPONSE_NODE.instantiate() 
+		var response : ResponseNode = GlobalDeclarations.RESPONSE_NODE.instantiate() 
 		response.slot = i["OptionSlot"]
 		response.command = i["Option"]["DialogCommand"]
 		response.to_dialog_id = i["Option"]["Dialog"]
@@ -75,7 +75,7 @@ func create_response_nodes_from_json(node : dialog_node,json : Dictionary) -> in
 	return total_num_of_responses
 	
 
-func create_dialogs_from_responses(dialog : dialog_node):
+func create_dialogs_from_responses(dialog : DialogNode):
 	for response in dialog.response_options:
 		if response.to_dialog_id != -1 && response.option_type == 0:
 			for loaded_dialog in loaded_dialog_nodes:
@@ -84,7 +84,7 @@ func create_dialogs_from_responses(dialog : dialog_node):
 					
 			for json_dialog in imported_dialogs:
 				if json_dialog["DialogId"] == response.to_dialog_id:
-					var connected_dialog : dialog_node = create_dialog_from_json(json_dialog,response.position_offset+Vector2(GlobalDeclarations.DIALOG_NODE_HORIZONTAL_OFFSET,0))
+					var connected_dialog : DialogNode = create_dialog_from_json(json_dialog,response.position_offset+Vector2(GlobalDeclarations.DIALOG_NODE_HORIZONTAL_OFFSET,0))
 					
 					emit_signal("request_connect_nodes",response,0,connected_dialog,0)		
 		loaded_responses.append(response)
@@ -93,7 +93,7 @@ func create_dialogs_from_responses(dialog : dialog_node):
 func scan_category_for_changes(category_name : String = CurrentEnvironment.current_category_name):
 	loaded_dialog_nodes = []
 	loaded_responses = []
-	var updated_dialog_nodes : Array[dialog_node]= []
+	var updated_dialog_nodes : Array[DialogNode]= []
 	var parsed_jsons := dialog_jsons_loader.new().get_dialog_jsons(category_name)
 	imported_dialogs = parsed_jsons.duplicate()
 	imported_category_name = category_name
@@ -107,7 +107,7 @@ func scan_category_for_changes(category_name : String = CurrentEnvironment.curre
 			if json["DialogId"] == current.dialog_id:
 				for i in json["Options"].size():
 					if i <= current.response_options.size():
-						
+						#Find the corresponding response node and update the information
 						var response = current.response_options[i]
 						response.slot = json["Options"][i]["OptionSlot"]
 						response.set_command(json["Options"][i]["Option"]["DialogCommand"])
@@ -116,7 +116,8 @@ func scan_category_for_changes(category_name : String = CurrentEnvironment.curre
 						response.color_decimal = json["Options"][i]["Option"]["DialogColor"]
 						response.set_option_from_json_index(json["Options"][i]["Option"]["OptionType"])
 					else:
-						var response : response_node = GlobalDeclarations.RESPONSE_NODE.instantiate() 
+						#Create new response nodes that aren't in the editor
+						var response : ResponseNode = GlobalDeclarations.RESPONSE_NODE.instantiate() 
 						response.slot = json["Options"][i]["OptionSlot"]
 						response.command = json["Options"][i]["Option"]["DialogCommand"]
 						response.to_dialog_id = json["Options"][i]["Option"]["Dialog"]
@@ -139,7 +140,7 @@ func find_dialog_node_from_id(id : int):
 			return dialog	
 	
 
-func update_dialog_node_information(node : dialog_node,json : Dictionary) -> dialog_node:
+func update_dialog_node_information(node : DialogNode,json : Dictionary) -> DialogNode:
 	if node.node_type != "Dialog Node":
 		return
 	node.dialog_title = json["DialogTitle"]

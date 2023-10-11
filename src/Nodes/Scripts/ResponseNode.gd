@@ -1,4 +1,4 @@
-class_name response_node
+class_name ResponseNode
 extends GraphNode
 
 @export var _response_text_node_path: NodePath
@@ -46,17 +46,17 @@ var slot : int = -1: set = set_response_slot
 var response_title : String = ''
 var color_decimal :int = 16777215: set = set_color_decimal
 var command :String = ''
-var connected_dialog : dialog_node = null: set = set_connected_dialog
+var connected_dialog : DialogNode = null: set = set_connected_dialog
 var to_dialog_id = -1: set = set_to_dialog_id
 var option_type = 0: set = set_option_type
 var node_index := -1
 
-var parent_dialog : dialog_node
+var parent_dialog : DialogNode
 
 var total_height : int
 
 var connection_hidden := false
-var overlapping_response : response_node = null
+var overlapping_response ResponseNode = null
 
 var minimized = false
 
@@ -257,7 +257,7 @@ func add_new_connected_dialog(commit_to_undo := true):
 		return
 	if connected_dialog:
 		return
-	var new_dialog : dialog_node = GlobalDeclarations.DIALOG_NODE.instantiate()
+	var new_dialog : DialogNode = GlobalDeclarations.DIALOG_NODE.instantiate()
 	new_dialog.position_offset = position_offset + Vector2(GlobalDeclarations.DIALOG_NODE_HORIZONTAL_OFFSET,0)
 	if ResponseTextNode.text != '':
 		new_dialog.dialog_title = ResponseTextNode.text

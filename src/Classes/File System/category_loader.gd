@@ -134,7 +134,7 @@ func create_new_dialog_node_from_ydec(node_data : Dictionary):
 	return currently_loaded_dialog
 
 func create_response_node_from_ydec(response_data):
-	var currently_loaded_response : response_node = GlobalDeclarations.RESPONSE_NODE.instantiate()
+	var currently_loaded_response ResponseNode = GlobalDeclarations.RESPONSE_NODE.instantiate()
 	currently_loaded_response.slot = response_data.slot
 	currently_loaded_response.color_decimal = response_data.color_decimal
 	currently_loaded_response.to_dialog_id = response_data.to_dialog_id

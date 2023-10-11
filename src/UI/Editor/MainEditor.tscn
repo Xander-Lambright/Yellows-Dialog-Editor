@@ -1,9 +1,10 @@
 [gd_scene load_steps=40 format=3 uid="uid://dm212olg3jtq4"]
 
-[ext_resource type="Script" path="res://src/UI/Editor/MainEditor.gd" id="1"]
 [ext_resource type="Script" path="res://src/UI/Dialog Settings/Scripts/SettingsPanel.gd" id="2"]
+[ext_resource type="Script" path="res://src/UI/Editor/scripts/MainEditor.gd" id="2_bxcgc"]
 [ext_resource type="Script" path="res://src/UI/NavigationPanel/Scripts/EditorNavigation.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://dj443rk8yk0hi" path="res://src/UI/Dialog Settings/StartQuest.tscn" id="4"]
+[ext_resource type="Script" path="res://src/UI/Editor/scripts/DialogEditor.gd" id="4_n3av2"]
 [ext_resource type="PackedScene" uid="uid://b8hqt3kn3abc2" path="res://src/UI/Dialog Settings/Dialog Availability.tscn" id="5"]
 [ext_resource type="Script" path="res://src/Classes/UndoRedo.gd" id="5_jh223"]
 [ext_resource type="PackedScene" uid="uid://bfl1pkyh2gaqd" path="res://src/UI/Dialog Settings/FactionChange.tscn" id="6"]
@@ -14,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://mdckhsyuc7am" path="res://Assets/UI Textures/Icon Font/share-line.png" id="8_vgh51"]
 [ext_resource type="PackedScene" uid="uid://b38oc862r1lp2" path="res://src/UI/Dialog Settings/ScoreboardAvailability.tscn" id="9"]
 [ext_resource type="Texture2D" uid="uid://b5hvjqasdvdh5" path="res://Assets/UI Textures/Icon Font/reload-circle-line.png" id="9_mukh6"]
-[ext_resource type="Script" path="res://src/UI/Editor/DialogEditor.gd" id="10"]
 [ext_resource type="Texture2D" uid="uid://yboafh0lt84i" path="res://Assets/UI Textures/Icon Font/article-search-line.png" id="10_cc0sy"]
 [ext_resource type="Script" path="res://src/UI/CategoryPanel/Scripts/CategoryPanel.gd" id="11"]
 [ext_resource type="Texture2D" uid="uid://oqwy01vjynr5" path="res://Assets/UI Textures/Icon Font/menu-line.png" id="11_qxp7e"]
@@ -27,9 +27,9 @@
 [ext_resource type="PackedScene" uid="uid://b8aewr7debfni" path="res://src/UI/Util/Expandable Line Edit.tscn" id="15"]
 [ext_resource type="Script" path="res://src/UI/Util/Scripts/UIAnimations.gd" id="16"]
 [ext_resource type="Script" path="res://src/Nodes/Scripts/DialogText.gd" id="17"]
-[ext_resource type="Script" path="res://src/UI/Editor/MailData.gd" id="22_teu44"]
 [ext_resource type="PackedScene" uid="uid://bqw7nlvwgcprr" path="res://src/UI/Dialog Settings/MailItemSlot.tscn" id="23_o8k7p"]
 [ext_resource type="FontFile" uid="uid://dnq4gj617agk3" path="res://Assets/Font/minecraft_font.ttf" id="23_rr465"]
+[ext_resource type="Script" path="res://src/UI/Dialog Settings/Scripts/MailData.gd" id="25_qrf6v"]
 [ext_resource type="PackedScene" uid="uid://b8upc5vs5ynlw" path="res://src/UI/Editor/EditorSettings.tscn" id="25_ypfkb"]
 
 [sub_resource type="StyleBoxEmpty" id="18"]
@@ -86,7 +86,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 1
 theme = ExtResource("14")
-script = ExtResource("1")
+script = ExtResource("2_bxcgc")
 _dialog_editor_path = NodePath("DialogEditor")
 _category_list_path = NodePath("CategoryPanel")
 _information_panel_path = NodePath("InformationPanel")
@@ -130,11 +130,12 @@ zoom_min = 0.001
 show_zoom_label = true
 minimap_enabled = false
 minimap_size = Vector2(150, 150)
-script = ExtResource("10")
+script = ExtResource("4_n3av2")
 
-[node name="UndoSystem" type="Node" parent="DialogEditor" node_paths=PackedStringArray("dialog_editor")]
+[node name="UndoSystem" type="Node" parent="DialogEditor"]
 script = ExtResource("5_jh223")
-dialog_editor = NodePath("..")
+dialog_editor = Object(GraphEdit,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":false,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":-2,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":true,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":15,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":15.0,"offset_bottom":21.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":0,"size_flags_vertical":0,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":2,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","right_disconnects":true,"scroll_offset":Vector2(-15, -21),"snap_distance":40,"use_snap":true,"panning_scheme":0,"connection_lines_curvature":0.5,"connection_lines_thickness":2.0,"connection_lines_antialiased":true,"zoom":1.0,"zoom_min":0.001,"zoom_max":2.0736,"zoom_step":1.2,"show_zoom_label":true,"minimap_enabled":false,"minimap_size":Vector2(150, 150),"minimap_opacity":0.65,"arrange_nodes_button_hidden":false,"script":ExtResource("4_n3av2"))
+
 
 [node name="TopPanel" type="Panel" parent="."]
 layout_mode = 0
@@ -688,7 +689,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("22_teu44")
+script = ExtResource("25_qrf6v")
 message_box_path = NodePath("ScrollContainer/VBoxContainer/VBoxContainer/Message")
 prev_button_path = NodePath("ScrollContainer/VBoxContainer/VBoxContainer/PageButtons/PrevPageButton")
 next_button_path = NodePath("ScrollContainer/VBoxContainer/VBoxContainer/PageButtons/NextPageButton")

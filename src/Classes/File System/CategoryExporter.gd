@@ -41,7 +41,7 @@ func empty_category_jsons(category_name : String):
 			file_name = dir.get_next()
 		
 
-func create_dialog_dict(dialog : dialog_node, version):
+func create_dialog_dict(dialog : DialogNode, version):
 	match version :
 		0:
 			var dialog_json_array : Array[String] =  [
@@ -255,7 +255,7 @@ func create_dialog_dict(dialog : dialog_node, version):
 			dialog_json_array.append_array(rest_of_dialog_json_array)
 			return dialog_json_array
 	
-func create_option_dict(response:response_node,islast:bool,withoutQuotes : bool = false):
+func create_option_dict(response: ResponseNode,islast:bool,withoutQuotes : bool = false):
 	var response_dict :Array[String]= []
 	if withoutQuotes:
 		if islast == false:

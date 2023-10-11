@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://csqosyiphjom2"]
 
-[ext_resource type="Script" path="res://src/Nodes/Scripts/color_organizer.gd" id="1_lo3x2"]
-[ext_resource type="Texture2D" uid="uid://doa0qf5wgt1u7" path="res://Assets/UI Textures/Icon Font/lock-off-line.svg" id="2_ss77x"]
+[ext_resource type="Script" path="res://src/Nodes/Scripts/ColorOrganizer.gd" id="1_hqpav"]
+[ext_resource type="Texture2D" uid="uid://doa0qf5wgt1u7" path="res://Assets/UI Textures/Icon Font/lock-off-line.svg" id="2_f4aqh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_br6ho"]
 bg_color = Color(1, 1, 1, 0.713726)
@@ -34,7 +34,7 @@ slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
-script = ExtResource("1_lo3x2")
+script = ExtResource("1_hqpav")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -48,7 +48,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 tooltip_text = "Lock to prevent color organizer from being altered in any way."
 toggle_mode = true
-icon = ExtResource("2_ss77x")
+icon = ExtResource("2_f4aqh")
 icon_alignment = 1
 expand_icon = true
 
